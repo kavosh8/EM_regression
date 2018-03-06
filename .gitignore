@@ -1,0 +1,7 @@
+*.pyc
+*.zip
+*.mov
+.DS_Store
+*.tar
+*.txt
+*.gz
