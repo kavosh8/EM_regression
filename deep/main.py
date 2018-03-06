@@ -3,6 +3,7 @@ import numpy.linalg as lg
 import matplotlib.pyplot as plt
 import sys
 import transition_model
+import math
 
 def create_train_data(num_samples,num_lines):
 	li_samples=[]
@@ -11,7 +12,7 @@ def create_train_data(num_samples,num_lines):
 		for n in range(num_samples):
 			sample=numpy.random.uniform(-1,1)
 			if l==0:
-				label=numpy.sin(3*sample)+numpy.random.normal(loc=0.0, scale=0.0,size=1)
+				label=numpy.sin(3*sample)+1+numpy.random.normal(loc=0.0, scale=0.0,size=1)
 			elif l==1:
 				label=numpy.cos(3*sample)+numpy.random.normal(loc=0.0, scale=0.0,size=1)
 			elif l==2:
@@ -39,7 +40,11 @@ def compute_posterior(tm,phi,y):
 	p_li=[]
 	for o in o_li:
 		p=numpy.array(y-o)
-		p=numpy.exp(-numpy.multiply(p,p)/(.05)).flatten()
+		p=numpy.exp(-numpy.multiply(p,p)/gaussian_variance).flatten()
+		for x in p:
+			if math.isnan(x):
+				print("underflow")
+				sys.exit(1)
 		p_li.append(p)
 	p_arr=numpy.transpose(numpy.array(p_li))
 	for i in range(p_arr.shape[0]):
@@ -65,14 +70,15 @@ num_experiments=1
 num_samples=100
 num_lines=3
 num_iterations=100
+gaussian_variance=.01
 plot=True
 
 model_params={}
-model_params['lipschitz_constant']=0.6
-model_params['num_hidden_layers']=1
-model_params['hidden_layer_nodes']=64
+model_params['lipschitz_constant']=0.8
+model_params['num_hidden_layers']=2
+model_params['hidden_layer_nodes']=16
 model_params['activation_fn']='relu'
-model_params['learning_rate']=0.001
+model_params['learning_rate']=0.00025
 model_params['observation_size']=1
 model_params['num_models']=3
 model_params['num_epochs']=100
