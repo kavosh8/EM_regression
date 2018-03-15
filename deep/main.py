@@ -144,6 +144,7 @@ for iteration in range(em_params['num_iterations']):
 	li_w.append(compute_wass_loss(tm,phi,em_object))
 	print("li_w",li_w)
 	print("li_em_obj",li_em_obj)
+	sys.stdout.flush()
 	numpy.savetxt("w_loss-"+str(run_ID)+"-"+
 				  str(model_params['lipschitz_constant'])+"-"+
 			 	  str(em_params['gaussian_variance'])+".txt",li_w)
