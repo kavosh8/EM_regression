@@ -45,20 +45,20 @@ class em_learner:
 		for i in range(len(p_arr)):
 			p_li.append(numpy.clip(p_arr[i,:],a_min=1e-20, a_max=1))
 		#print("p_li",p_li)
-		print("obj",obj)
-		return p_li
+		return p_li,obj
 	def compute_learned_prior(self,w_li):
 		for n in range(self.N):
 			self.learned_priors[n]=numpy.mean(w_li[n])
-		print("priors:",self.learned_priors)
+		#print("priors:",self.learned_priors)
 		#print(self.learned_priors)
 		#sys.exit(1)
 
 	def e_step_m_step(self,tm,phi,y,iteration):
-		w_li=self.compute_posterior(tm,phi,y,iteration)#E step
+		w_li,obj=self.compute_posterior(tm,phi,y,iteration)#E step
 		#print(w_li)
 		#sys.exit(1)
 		if iteration>0:
 			tm.regression(phi,y,w_li)#M step
 			self.compute_learned_prior(w_li)
 			#sys.exit(1)
+		return obj
