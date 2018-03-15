@@ -19,7 +19,7 @@ for run_number in range(50):
 		for variance in [0.1,0.05,0.01]:
 			outfile="EM_{}_{}_{}.pbs".format(str(run_number),str(k),str(variance))
 			output=open(outfile, 'w')
-			print >>output, (bash_script.format(str(run_number),str(k),str(variance))
+			print >>output, (bash_script.format(str(run_number),str(k),str(variance)))
 			output.close()
 			cmd="qsub -l short %s" % outfile
 			os.system(cmd)
