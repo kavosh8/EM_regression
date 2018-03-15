@@ -150,5 +150,5 @@ for iteration in range(em_params['num_iterations']):
 			 	  str(em_params['gaussian_variance'])+".txt",li_w)
 	numpy.savetxt("em_obj-"+str(run_ID)+"-"+
 				  str(model_params['lipschitz_constant'])+"-"+
-			 	  str(em_params['gaussian_variance'])+".txt",li_w)
+			 	  str(em_params['gaussian_variance'])+".txt",li_em_obj)
 
