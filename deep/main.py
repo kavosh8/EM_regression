@@ -126,9 +126,9 @@ try:
 except:
 	em_params['gaussian_variance']=.05
 em_params['num_models']=model_params['num_models']
-
-fig = plt.figure()
-ax = fig.add_subplot(1,1,1)
+if plot==True:
+	fig = plt.figure()
+	ax = fig.add_subplot(1,1,1)
 li_obj_all=[]
 li_w=[]
 li_em_obj=[]
