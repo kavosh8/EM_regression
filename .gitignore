@@ -5,3 +5,5 @@
 *.tar
 *.txt
 *.gz
+deep/save
+deep/report
