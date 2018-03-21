@@ -13,7 +13,7 @@ import math
 import em
 import keras
 import scipy.stats
-
+import time
 
 def f0(x):
 	return numpy.tanh(x)+3
@@ -105,7 +105,7 @@ def plot_everything(li_samples,li_labels,tm,phi,ax):
 num_experiments=1
 li_num_samples=5*[30]
 num_lines=len(li_num_samples)
-plot=False
+plot=True
 
 model_params={}
 try:
@@ -136,11 +136,18 @@ li_samples,li_labels=create_train_data(li_num_samples,num_lines)
 phi,y=create_matrices(li_samples,li_labels)
 tm=transition_model.neural_transition_model(model_params)
 em_object=em.em_learner(em_params)
+
 for iteration in range(em_params['num_iterations']):
 	li_em_obj.append(em_object.e_step_m_step(tm,phi,y,iteration))
 	if plot==True:
 		plot_everything(li_samples,li_labels,tm,phi,ax)
-		plt.pause(.5)
+		fig.savefig('save/visualize'+str(run_ID)+"-"+
+				  str(model_params['lipschitz_constant'])+"-"+
+			 	  str(em_params['gaussian_variance'])+'iteration-'+str(iteration)+'.pdf')
+		if iteration==0:
+			plt.pause(25)
+		else:
+			plt.pause(.5)
 	li_w.append(compute_wass_loss(tm,phi,em_object))
 	print("li_w",li_w)
 	print("li_em_obj",li_em_obj)
