@@ -30,9 +30,9 @@ def load_data(fname):
 def load_synthetic_data(N):
 	li_s,li_sprime=[],[]
 	for _ in range(N):
-		x1,y1,x2,y2=numpy.random.randint(1,10,4)
+		x1,y1,x2,y2=numpy.random.uniform(0,10,4)
 		s=[x1,y1,x2,y2]
-		case=numpy.random.randint(0,8)
+		case=numpy.random.randint(0,16)
 		if case==0:
 			s_p=[x1+1,y1,x2+1,y2]
 		elif case==1:
@@ -42,16 +42,72 @@ def load_synthetic_data(N):
 		elif case==3:
 			s_p=[x1+1,y1,x2,y2-1]
 		elif case==4:
-			s_p=[x1,y1+1,x2+1,y2]
+			s_p=[x1-1,y1,x2+1,y2]
 		elif case==5:
-			s_p=[x1,y1+1,x2-1,y2]
+			s_p=[x1-1,y1,x2-1,y2]
 		elif case==6:
-			s_p=[x1,y1-1,x2+1,y2]
+			s_p=[x1-1,y1,x2,y2+1]
 		elif case==7:
+			s_p=[x1-1,y1,x2,y2-1]
+		if case==8:
+			s_p=[x1,y1+1,x2+1,y2]
+		elif case==9:
+			s_p=[x1,y1+1,x2-1,y2]
+		elif case==10:
+			s_p=[x1,y1+1,x2,y2+1]
+		elif case==11:
+			s_p=[x1,y1+1,x2,y2-1]
+		elif case==12:
+			s_p=[x1,y1-1,x2+1,y2]
+		elif case==13:
 			s_p=[x1,y1-1,x2-1,y2]
+		elif case==14:
+			s_p=[x1,y1-1,x2,y2+1]
+		elif case==15:
+			s_p=[x1,y1-1,x2,y2-1]
 		li_s.append(s)
 		li_sprime.append(s_p)
-	#print(li_s)
+	#print(len(li_s))
+	#print(li_sprime)
+	#sys.exit(1)
+	return li_s,li_sprime
+def load_synthetic_data_small_1D(N):
+	li_s,li_sprime=[],[]
+	for _ in range(N):
+		x1=numpy.random.uniform(0,10,1)
+		s=[x1]
+		case=numpy.random.randint(0,2)
+		#print(case)
+		if case==0:
+			s_p=[x1+1]
+		elif case==1:
+			s_p=[x1-1]
+		li_s.append(s)
+		li_sprime.append(s_p)
+	#print(len(li_s))
+	#print(li_sprime)
+	#sys.exit(1)
+	return li_s,li_sprime
+
+
+def load_synthetic_data_small(N):
+	li_s,li_sprime=[],[]
+	for _ in range(N):
+		x1,y1=numpy.random.uniform(0,10,2)
+		s=[x1,y1]
+		case=numpy.random.randint(0,4)
+		#print(case)
+		if case==0:
+			s_p=[x1+1,y1]
+		elif case==1:
+			s_p=[x1-1,y1]
+		elif case==2:
+			s_p=[x1,y1+1]
+		elif case==3:
+			s_p=[x1+1,y1-1]
+		li_s.append(s)
+		li_sprime.append(s_p)
+	#print(len(li_s))
 	#print(li_sprime)
 	#sys.exit(1)
 	return li_s,li_sprime
@@ -87,10 +143,11 @@ def create_matrices(li_samples,li_labels,model_params):
 
 def plot_everything(li_samples,li_labels,tm,phi,ax):
 	ax.clear()
-	ax.plot(li_samples,li_labels,'o')
+	#print(li_samples)
+	ax.plot(numpy.squeeze(li_samples),numpy.squeeze(li_labels),'o')
 	y_li=tm.predict(phi)
 	for index,y in enumerate(y_li):
-		ax.plot(li_samples,y,'o',lw=2,label=index)
+		ax.plot(numpy.squeeze(li_samples),numpy.squeeze(y),'o',lw=2,label=index)
 	plt.legend()
 
 
@@ -99,27 +156,23 @@ def plot_everything(li_samples,li_labels,tm,phi,ax):
 
 
 num_experiments=1
-num_lines=8
 plot=False
 
 model_params={}
 try:
 	model_params['lipschitz_constant']=float(sys.argv[2])
 except:
-	model_params['lipschitz_constant']=.2
-model_params['num_hidden_layers']=1
+	model_params['lipschitz_constant']=1.1
+model_params['num_hidden_layers']=0
 model_params['hidden_layer_nodes']=32
 model_params['activation_fn']='relu'
-model_params['learning_rate']=0.0001
+model_params['learning_rate']=0.0005
 model_params['observation_size']=4
-model_params['num_models']=num_lines
-model_params['num_epochs']=10
+model_params['num_models']=16
+model_params['num_epochs']=5
 em_params={}
-em_params['num_iterations']=100
-try:
-	em_params['gaussian_variance']=float(sys.argv[3])
-except:
-	em_params['gaussian_variance']=.01
+em_params['num_iterations']=500
+em_params['gaussian_variance']=.01#for 1D problem, effective range is 0.25 to 0.001
 em_params['num_models']=model_params['num_models']
 em_params['observation_size']=model_params['observation_size']
 if plot==True:
@@ -129,28 +182,28 @@ li_obj_all=[]
 li_w=[]
 li_em_obj=[]
 #li_samples,li_labels=load_data('states.csv'),load_data('next_states.csv')
-li_samples,li_labels=load_synthetic_data(5000)
+#li_samples,li_labels=load_synthetic_data_small(4*100)
+li_samples,li_labels=load_synthetic_data(16*100)
 
 phi,y=create_matrices(li_samples,li_labels,model_params)
 tm=transition_model.neural_transition_model(model_params)
 em_object=em.em_learner(em_params)
 
 for iteration in range(em_params['num_iterations']):
-	li_em_obj.append(em_object.e_step_m_step(tm,phi,y,iteration))
-	for number,x in enumerate(tm.predict(numpy.array([2,3,5,3]).reshape(1,4))):
-		print(number,x)
-	#sys.exit(1)
-	'''
 	if plot==True:
 		plot_everything(li_samples,li_labels,tm,phi,ax)
+		'''
 		fig.savefig('save/visualize'+str(run_ID)+"-"+
 				  str(model_params['lipschitz_constant'])+"-"+
 			 	  str(em_params['gaussian_variance'])+'iteration-'+str(iteration)+'.pdf')
-		if iteration==0:
-			plt.pause(25)
-		else:
-			plt.pause(.5)
-	'''
+		'''
+		plt.pause(.25)
+	li_em_obj.append(em_object.e_step_m_step(tm,phi,y,iteration))
+	for number,x in enumerate(tm.predict(numpy.array([3,3,3,3]).reshape(1,model_params['observation_size']))):
+		print("********")
+		print("number:",number,"next state:",x.tolist(),"prob:",em_object.learned_priors[number])
+	#sys.exit(1)
+	
 	#li_w.append(compute_wass_loss(tm,phi,em_object))
 	#print("li_w",li_w)
 	print("li_em_obj",li_em_obj)

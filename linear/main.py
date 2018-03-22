@@ -15,9 +15,9 @@ def create_train_data(num_samples,num_lines):
 		for n in range(num_samples):
 			sample=numpy.random.uniform(-1,1)
 			if l==0:
-				label=2*sample+1+numpy.random.normal(loc=0.0, scale=0.0,size=1)
+				label=[sample+1]#+numpy.random.normal(loc=0.0, scale=0.0,size=1)
 			elif l==1:
-				label=-2*sample+1+numpy.random.normal(loc=0.0, scale=0.0,size=1)
+				label=[sample-1]#+numpy.random.normal(loc=0.0, scale=0.0,size=1)
 			else:
 				print('not implemented yet ... aborting')
 				sys.exit(1)
@@ -37,11 +37,11 @@ def create_matrices(li_samples,li_labels):
 
 def compute_posterior(theta1,theta2,phi,y):
 	prob1=numpy.array(y-numpy.matmul(phi,theta1))
-	prob1=numpy.exp(-numpy.multiply(prob1,prob1)/(2.0))
+	prob1=numpy.exp(-numpy.multiply(prob1,prob1)/(.1))
 	prob1_sum=numpy.multiply(prob1,numpy.log(prob1))
 	#print(prob1)
 	prob2=numpy.array(y-numpy.matmul(phi,theta2))
-	prob2=numpy.exp(-numpy.multiply(prob2,prob2)/(2.0))
+	prob2=numpy.exp(-numpy.multiply(prob2,prob2)/(.1))
 	prob2_sum=numpy.multiply(prob2,numpy.log(prob2))
 	obj=numpy.sum(prob1_sum)+numpy.sum(prob2_sum)
 	#print(prob2)
@@ -60,11 +60,11 @@ def compute_em_objective():
 	print("to be implemented")
 
 num_experiments=200
-num_samples=50
+num_samples=100
 num_lines=2
-num_iterations=40
+num_iterations=100
 fig = plt.figure()
-plt.pause(10)
+#plt.pause(10)
 ax1 = fig.add_subplot(1,1,1)
 li_obj_all=[]
 for experiment in range(num_experiments):
@@ -82,8 +82,9 @@ for experiment in range(num_experiments):
 		#sys.exit(1)
 		w1,w2,obj=compute_posterior(theta1,theta2,phi,y)
 		li_obj.append(obj)
-		theta1=linear_regression(phi,y,w1)
-		theta2=linear_regression(phi,y,w2)
+		if iteration>0:
+			theta1=linear_regression(phi,y,w1)
+			theta2=linear_regression(phi,y,w2)
 		#print(obj)
 
 		y1=theta1[0,0]*numpy.array(li_samples)+theta1[1,0]

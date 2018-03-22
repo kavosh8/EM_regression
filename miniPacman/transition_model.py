@@ -41,14 +41,15 @@ class neural_transition_model:
                     ,activation=self.activation_fn
                     ,kernel_constraint = WeightClip(self.K))(h)
 
-    	output_state=Dense(self.observation_size)(h)
+    	output_state=Dense(self.observation_size,kernel_constraint = WeightClip(self.K),bias_constraint=WeightClip(1.))(h)
         model=keras.models.Model(inputs=input_state, outputs=output_state)
     	ad=optimizers.Adam(lr=self.learning_rate)
     	model.compile(loss='mean_squared_error',optimizer=ad)
         return model
-    def regression(self,phi,y,w_li):
+    def regression(self,phi,y,w_li,iteration):
         assert len(w_li)==self.num_models, "number of weights not equal to number of functions {} {}".format(len(w_li),self.num_models)
         for index, w in enumerate(w_li):
             self.models[index].fit(x=phi,y=y,epochs=self.num_epochs, verbose=0,sample_weight=w)
+        #sys.exit(1)
     def predict(self,phi):
         return [x.predict(phi) for x in self.models]
