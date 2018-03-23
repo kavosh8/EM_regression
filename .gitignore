@@ -4,6 +4,7 @@
 .DS_Store
 *.tar
 *.txt
+*.pbs
 *.gz
 deep/save
 deep/report
