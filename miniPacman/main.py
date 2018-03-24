@@ -82,8 +82,8 @@ for iteration in range(em_params['num_iterations']):
 			print("number:",number,"next state:",x.tolist(),"prob:",em_object.learned_priors[number])#print Wasserstein objective
 	numpy.savetxt("log/w_loss-"+str(run_number)+"-"+\
 				 str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
-				 "-"+str(em_params['gaussian_variance'])+str(model_params['num_hidden_layers'])+".txt",li_w)
+				 "-"+str(em_params['gaussian_variance'])+"-"+str(model_params['num_hidden_layers'])+".txt",li_w)
 	numpy.savetxt("log/em_loss-"+str(run_number)+"-"+\
 				 str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
-				 "-"+str(em_params['gaussian_variance'])+str(model_params['num_hidden_layers'])+".txt",li_em_obj)
+				 "-"+str(em_params['gaussian_variance'])+"-"+str(model_params['num_hidden_layers'])+".txt",li_em_obj)
 

@@ -10,7 +10,7 @@ source /home/kasadiat/.bashrc
 export PYTHONPATH=/home/kasadiat/anaconda2/lib/python2.7/site-packages:/home/kasadiat/anaconda2
 echo "prog started at: 'date'"
 cd /home/kasadiat/Desktop/EM_regression/miniPacman
-python main.py {} {} {} {}
+python main.py {} {} {} {} {}
 '''
 
 
