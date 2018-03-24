@@ -29,24 +29,24 @@ model_params['activation_fn']='relu'
 try:
 	model_params['learning_rate']=float(sys.argv[3])
 except:
-	print("learning rate not found setting it to 0.0005")
-	model_params['learning_rate']=0.0005
+	print("learning rate not found setting it to 0.005")
+	model_params['learning_rate']=0.005
 model_params['observation_size']=4
 model_params['num_models']=16
 model_params['num_epochs']=5
 try:
 	model_params['num_samples']=int(sys.argv[2])
 except:
-	print("num samples not found .. setting it to 1600")
-	model_params['num_samples']=100*16
+	print("num samples not found .. setting it to 1000")
+	model_params['num_samples']=1000
 
 em_params={}
 em_params['num_iterations']=500
 try:
 	em_params['gaussian_variance']=float(sys.argv[4])#for 1D problem, effective range is 0.25 to 0.001
 except:
-	print("gaussian variance not found .. setting it to 0.01")
-	em_params['gaussian_variance']=.01
+	print("gaussian variance not found .. setting it to 0.1")
+	em_params['gaussian_variance']=.1
 
 em_params['num_models']=model_params['num_models']
 em_params['observation_size']=model_params['observation_size']
