@@ -23,7 +23,11 @@ import utils
 
 model_params={}
 model_params['lipschitz_constant']=1.1
-model_params['num_hidden_layers']=0
+try:
+	model_params['num_hidden_layers']=int(sys.argv[5])
+except:
+	print("num hidden_layer_nodes not found setting it to 0")
+	model_params['num_hidden_layers']=0
 model_params['hidden_layer_nodes']=32
 model_params['activation_fn']='relu'
 try:
@@ -67,12 +71,19 @@ for iteration in range(em_params['num_iterations']):
 	print(iteration,"li_em_obj:",li_em_obj[-1],"li_w",li_w[-1])#print EM objective
 	sys.stdout.flush()
 	if iteration%20==0 and iteration>0:
+		print([3,3,3,3])
 		for number,x in enumerate(tm.predict(numpy.array([3,3,3,3]).reshape(1,model_params['observation_size']))):
+			print("number:",number,"next state:",x.tolist(),"prob:",em_object.learned_priors[number])#print Wasserstein objective
+		print([[0,0,0,0]])
+		for number,x in enumerate(tm.predict(numpy.array([0,0,0,0]).reshape(1,model_params['observation_size']))):
+			print("number:",number,"next state:",x.tolist(),"prob:",em_object.learned_priors[number])#print Wasserstein objective
+		print([6,0,0,6])
+		for number,x in enumerate(tm.predict(numpy.array([6,0,0,6]).reshape(1,model_params['observation_size']))):
 			print("number:",number,"next state:",x.tolist(),"prob:",em_object.learned_priors[number])#print Wasserstein objective
 	numpy.savetxt("log/w_loss-"+str(run_number)+"-"+\
 				 str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
-				 "-"+str(em_params['gaussian_variance'])+".txt",li_w)
+				 "-"+str(em_params['gaussian_variance'])+str(model_params['num_hidden_layers'])+".txt",li_w)
 	numpy.savetxt("log/em_loss-"+str(run_number)+"-"+\
 				 str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
-				 "-"+str(em_params['gaussian_variance'])+".txt",li_em_obj)
+				 "-"+str(em_params['gaussian_variance'])+str(model_params['num_hidden_layers'])+".txt",li_em_obj)
 
