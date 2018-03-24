@@ -27,4 +27,4 @@ for run_number in range(5):
 						output.close()
 						cmd="qsub -l long %s" % outfile
 						os.system(cmd)
-						time.sleep(2)
+						time.sleep(.2)
