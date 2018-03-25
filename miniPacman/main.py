@@ -22,7 +22,10 @@ import utils
 # take as input, from qsub script, run ID num samples stepsize and gaussian variance ...
 
 model_params={}
-model_params['lipschitz_constant']=1.1
+try:
+	model_params['lipschitz_constant']=float(sys.argv[6])
+except:
+	model_params['lipschitz_constant']=1.1
 try:
 	model_params['num_hidden_layers']=int(sys.argv[5])
 except:
