@@ -15,11 +15,11 @@ python main.py {} {} {} {} {} {}
 
 
 for run_number in range(5):
-	for num_samples in [2000]:
-		for learning_rate in [0.001,0.0005]:
+	for num_samples in [1000,2000,3000]:
+		for learning_rate in [0.001]:
 			for gaussian_variance in [0.05]:
-				for num_hidden_layers in [0,1,2]:
-					for lipschitz_constant in [0.1,0.2,0.25,0.5,1.,1.5,2.]:
+				for num_hidden_layers in [1,2]:
+					for lipschitz_constant in [0.1,0.2,0.25,0.3,0.5,1.0]:
 						fname="log/w_loss-"+str(run_number)+"-"+str(num_samples)+"-"+str(learning_rate)+"-"+str(gaussian_variance)+"-"+str(num_hidden_layers)+"-"+str(lipschitz_constant)+".txt"
 						if os.path.isfile(fname)==False:
 							outfile="pbs_files/miniPacman_{}_{}_{}_{}_{}_{}.pbs".format(str(run_number),str(num_samples),str(learning_rate),str(gaussian_variance),str(num_hidden_layers),str(lipschitz_constant))
@@ -28,4 +28,4 @@ for run_number in range(5):
 							output.close()
 							cmd="qsub -l long %s" % outfile
 							os.system(cmd)
-							time.sleep(.1)
+							time.sleep(.25)
