@@ -21,7 +21,7 @@ class WeightClip(Constraint):
 
 class neural_transition_model:
     models=[]
-    def __init__(self,model_params):
+    def __init__(self,model_params,load=False,fname='empty'):
         self.K=model_params['lipschitz_constant']
         self.num_hidden_layers=model_params['num_hidden_layers']
         self.hidden_layer_nodes=model_params['hidden_layer_nodes']
@@ -32,6 +32,13 @@ class neural_transition_model:
         self.num_epochs=model_params['num_epochs']
         for n in range(self.num_models):
             self.models.append(self.create_model())
+        if load==True:
+            self.load_model(fname)
+            
+    def load_model(self,fname):
+        for index,x in enumerate(self.models):
+            temp=fname+"-"+str(index)+".txt"
+            x.load_weights(temp)
 
     def create_model(self):
     	input_state = keras.layers.Input(shape=(self.observation_size,))
