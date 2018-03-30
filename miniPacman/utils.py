@@ -1,4 +1,4 @@
-import numpy, scipy, sys
+import numpy, scipy, sys, csv
 
 def wasserstein(true_probs,true_labels,estimated_probs,estimated_labels):
 	W=scipy.stats.wasserstein_distance(true_labels, estimated_labels, u_weights=true_probs, v_weights=estimated_probs)

@@ -8,3 +8,5 @@
 *.gz
 deep/save
 deep/report
+miniPacman/best_models
+miniPacman/domain_data
