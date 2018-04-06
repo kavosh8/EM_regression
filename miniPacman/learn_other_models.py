@@ -50,7 +50,7 @@ def load_data(N):
 num_epochs=200
 current_states_data,next_states_data,actions_data,rewards_data,dones_data=load_data(2000)
 
-other_models_object.pacman_model.fit([numpy.array(current_states_data)[0:1000,0:2],numpy.array(actions_data)[0:1000,:]],numpy.array(next_states_data)[0:1000,0:2],epochs=num_epochs)
+other_models_object.pacman_model.fit([numpy.array(current_states_data)[:,0:2],numpy.array(actions_data)],numpy.array(next_states_data)[:,0:2],epochs=num_epochs)
 other_models_object.reward_model.fit(next_states_data,rewards_data,epochs=num_epochs)
 #sys.exit(1)
 other_models_object.done_model.fit(next_states_data,dones_data,epochs=num_epochs)

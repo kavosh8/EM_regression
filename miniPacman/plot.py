@@ -15,9 +15,11 @@ for num_samples in [1000,2000,3000]:
 							temp=numpy.loadtxt(fname)
 							if len(temp)==500:
 								li_runs.append(temp)
+								print(num_samples,lipschitz_constant,run_number,temp[-1])
 						except:
 							pass
 					means.append(numpy.mean(li_runs,axis=0)[-1])
+
 				plt.plot([0.1,0.2,0.25,0.3,0.5],means,label='num training samples: '+str(num_samples))
 plt.xlabel("Lipschitz constant")
 plt.ylabel("Wasserstein loss")

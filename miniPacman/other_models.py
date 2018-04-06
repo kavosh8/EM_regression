@@ -17,6 +17,14 @@ class neural_other_model:
         self.reward_model=self.create_reward_model()
         self.done_model=self.create_done_model()
         self.pacman_model=self.create_pacman_model()
+        if load==True:
+            self.load_model(fname)
+
+    def load_model(self,fname):
+        self.reward_model.load_weights(fname+"reward.h5")
+        self.done_model.load_weights(fname+"done.h5")
+        self.pacman_model.load_weights(fname+"pacman.h5")
+
     def create_done_model(self):
             input_state = keras.layers.Input(shape=(self.observation_size,))
             h=input_state
