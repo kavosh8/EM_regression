@@ -5,6 +5,7 @@ from keras.layers import Dense, Input
 from keras import optimizers
 from keras.constraints import Constraint
 from keras import backend as K
+import sys
 
 class neural_other_model:
     model=0
@@ -17,13 +18,18 @@ class neural_other_model:
         self.reward_model=self.create_reward_model()
         self.done_model=self.create_done_model()
         self.pacman_model=self.create_pacman_model()
+        self.ghosts_model=self.create_ghosts_model()
         if load==True:
             self.load_model(fname)
+            self.ghosts_tabular_model=numpy.loadtxt('best_models/tabular_models/ghosts.txt')
+            print(self.ghosts_tabular_model)
+            #sys.exit(1)
 
     def load_model(self,fname):
         self.reward_model.load_weights(fname+"reward.h5")
         self.done_model.load_weights(fname+"done.h5")
         self.pacman_model.load_weights(fname+"pacman.h5")
+        self.ghosts_model.load_weights(fname+"ghosts.h5")
 
     def create_done_model(self):
             input_state = keras.layers.Input(shape=(self.observation_size,))
@@ -63,7 +69,18 @@ class neural_other_model:
         ad=optimizers.Adam(lr=self.learning_rate)
         model.compile(loss='mean_squared_error',optimizer=ad)
         return model
-
+    def create_ghosts_model(self):
+        input_size=4
+        input_state = keras.layers.Input(shape=(input_size,))
+        h=input_state
+        for l in range(self.num_hidden_layers):
+            h=Dense(self.hidden_layer_nodes
+                    ,activation=self.activation_fn)(h)
+        out=Dense(input_size)(h)
+        model=keras.models.Model(inputs=input_state,outputs=out)
+        ad=optimizers.Adam(lr=self.learning_rate)
+        model.compile(loss='mean_squared_error',optimizer=ad)
+        return model
 
 
 

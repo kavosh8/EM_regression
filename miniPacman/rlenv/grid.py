@@ -181,9 +181,9 @@ class grid_env(object):
     
     def _check_dead(self):
         if np.all(self.pacman == self.ghost1) or np.all(self.pacman == self.ghost2):
-            print(self.pacman)
-            print(self.ghost1)
-            print(self.ghost2)
+            #print(self.pacman)
+            #print(self.ghost1)
+            #print(self.ghost2)
             return True
         else:
             return False

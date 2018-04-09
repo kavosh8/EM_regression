@@ -98,3 +98,18 @@ def compute_approx_wass_loss(tm,em_object):# only for 7*7 maze this one works sh
 			#sys.exit(1)
 			w_loss=w_loss+wasserstein(true_probs,true_labels,estimated_labels_probs,estimated_labels_column)
 	return w_loss/N
+
+def state_2_number(state):
+	if len(state)!=4:
+		print("wow")
+		sys.exit(1)
+	return state[0] + state[1]*7 + state[2]*7*7 +state[3]*7*7*7
+
+def number_2_state(number):
+	li=[]
+	for _ in range(3):
+		temp=int(number%7)
+		li.append(temp)
+		number=number/7
+	li.append(number)
+	return li

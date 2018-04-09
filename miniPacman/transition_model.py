@@ -20,8 +20,8 @@ class WeightClip(Constraint):
 
 
 class neural_transition_model:
-    models=[]
     def __init__(self,model_params,load=False,fname='empty'):
+        self.models=[]
         self.K=model_params['lipschitz_constant']
         self.num_hidden_layers=model_params['num_hidden_layers']
         self.hidden_layer_nodes=model_params['hidden_layer_nodes']
