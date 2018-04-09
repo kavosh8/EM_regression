@@ -3,8 +3,9 @@
 *.mov
 .DS_Store
 *.tar
-*.txt
 *.pbs
+*.txt
+*.h5
 *.gz
 deep/save
 deep/report
