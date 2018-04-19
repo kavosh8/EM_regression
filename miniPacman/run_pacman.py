@@ -3,8 +3,7 @@ import numpy
 import matplotlib.pyplot as plt
 from rlenv.grid import grid_env as grid_env
 
-def run(pl,num_time_steps):
-	show=False
+def run(pl,num_time_steps,show):
 	Env = grid_env(show)
 	#print('Initialized, starting to train')
 	
@@ -12,8 +11,6 @@ def run(pl,num_time_steps):
 	num_dead=0
 	for t in range(num_time_steps):
 		a=pl.choose_action(s)
-		#print(a)
-		#a=numpy.random.randint()
 		s1,r,dead = Env.step([a])
 		if show:
 			plt.pause(0.05)

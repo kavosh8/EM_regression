@@ -21,7 +21,7 @@ class neural_other_model:
         self.ghosts_model=self.create_ghosts_model()
         if load==True:
             self.load_model(fname)
-            self.ghosts_tabular_model=numpy.loadtxt('best_models/tabular_models/ghosts.txt')
+            self.ghosts_tabular_model=numpy.loadtxt('best_models/tabular_models/ghosts.h5')
             print(self.ghosts_tabular_model)
             #sys.exit(1)
 

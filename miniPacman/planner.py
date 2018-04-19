@@ -20,7 +20,7 @@ class planner:
 		model_params['observation_size']=4
 		model_params['num_models']=16
 		model_params['num_epochs']=5
-		model_params['num_samples']=3000
+		model_params['num_samples']=2000
 		load=True
 		run_ID=0
 		gaussian_variance=0.05
@@ -112,6 +112,7 @@ class planner:
 			else:
 				q_li.append(0)
 		return q_li
+		
 	def choose_action(self,s,epsilon=0.1):
 		if self.type=='random':
 			return numpy.random.randint(4)

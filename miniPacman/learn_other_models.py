@@ -68,8 +68,7 @@ for index in range(ghost_tabular_array.shape[0]):
 		#print(ghost_tabular_array[index,:])
 	else:
 		ghost_tabular_array[index,:]=ghost_tabular_array[index,:]/(numpy.sum(ghost_tabular_array[index,:]))
-numpy.savetxt("best_models/tabular_models/"+"ghosts.txt",ghost_tabular_array)
-sys.exit(1)
+numpy.savetxt("best_models/tabular_models/"+"ghosts.h5",ghost_tabular_array)
 
 other_models_object.pacman_model.fit([numpy.array(current_states_data)[:,0:2],numpy.array(actions_data)],numpy.array(next_states_data)[:,0:2],epochs=num_epochs)
 other_models_object.ghosts_model.fit(numpy.array(current_ghosts_data),numpy.array(next_ghosts_data),epochs=num_epochs)
