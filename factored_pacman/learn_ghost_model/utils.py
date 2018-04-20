@@ -16,24 +16,32 @@ def load_data(fname):
 	return out
 
 def load_synthetic_data(N):
+	each=N/49
 	li_s,li_sprime=[],[]
-	for _ in range(N):
-		x,y=numpy.random.randint(0,7,2)
-		s=[x,y]
-		while True:
-			case=numpy.random.randint(0,4)
-			if case==0:
-				s_p=[x+1,y]
-			elif case==1:
-				s_p=[x,y+1]
-			elif case==2:
-				s_p=[x-1,y]
-			elif case==3:
-				s_p=[x,y-1]
-			if numpy.min(s_p)>=0 and numpy.max(s_p)<=6:
-				break
-		li_s.append(s)
-		li_sprime.append(s_p)
+	for x in range(7):
+		for y in range(7):
+			s=[x,y]
+			for _ in range(each):
+				while True:
+					case=numpy.random.randint(0,4)
+					if case==0:
+						s_p=[x+1,y]
+					elif case==1:
+						s_p=[x,y+1]
+					elif case==2:
+						s_p=[x-1,y]
+					elif case==3:
+						s_p=[x,y-1]
+					if numpy.min(s_p)>=0 and numpy.max(s_p)<=6:
+						break
+				li_s.append(s)
+				li_sprime.append(s_p)
+
+	'''
+	for t1,t2 in zip(li_s,li_sprime):
+		print(t1,t2)
+	sys.exit(1)
+	'''
 	return li_s,li_sprime
 
 def create_matrices(li_samples,li_labels,model_params):
