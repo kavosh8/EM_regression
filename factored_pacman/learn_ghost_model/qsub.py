@@ -20,7 +20,7 @@ for run_number in range(5):
 			for gaussian_variance in [0.05,0.1,0.05]:
 				for num_hidden_layers in [1,2]:
 					for lipschitz_constant in [0.2,0.25,0.3,0.5,1.0]:
-						fname="log/w_loss-"+str(run_number)+"-"+str(num_samples)+"-"+str(learning_rate)+"-"+str(gaussian_variance)+"-"+str(num_hidden_layers)+"-"+str(lipschitz_constant)+".txt"
+						fname="log/w_loss-"+str(run_number)+"-"+str(num_samples)+"-"+str(learning_rate)+"-"+str(gaussian_variance)+"-"+str(num_hidden_layers)+"-"+str(lipschitz_constant)+".h5"
 						if os.path.isfile(fname)==False:
 							outfile="pbs_files/factored_pacman_{}_{}_{}_{}_{}_{}.pbs".format(str(run_number),str(num_samples),str(learning_rate),str(gaussian_variance),str(num_hidden_layers),str(lipschitz_constant))
 							output=open(outfile, 'w')
@@ -28,4 +28,4 @@ for run_number in range(5):
 							output.close()
 							cmd="qsub -l short %s" % outfile
 							os.system(cmd)
-							time.sleep(.25)
+							time.sleep(1)

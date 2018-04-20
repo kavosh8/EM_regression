@@ -96,7 +96,7 @@ for iteration in range(em_params['num_iterations']):
 		mname="log/model-"+str(run_number)+"-"+\
 				 str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
 				 "-"+str(em_params['gaussian_variance'])+"-"+str(model_params['num_hidden_layers'])+\
-				 "-"+str(model_params['lipschitz_constant'])+"-"+str(index)+".txt"
+				 "-"+str(model_params['lipschitz_constant'])+"-"+str(index)+".h5"
 		m.save_weights(mname)
 
 
