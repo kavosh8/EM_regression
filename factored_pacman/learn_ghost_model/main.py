@@ -91,6 +91,9 @@ for iteration in range(em_params['num_iterations']):
 	numpy.savetxt("log/em_loss-"+str(run_number)+"-"+\
 				 str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
 				 "-"+str(em_params['gaussian_variance'])+"-"+str(model_params['num_hidden_layers'])+"-"+str(model_params['lipschitz_constant'])+".txt",li_em_obj)
+		numpy.savetxt("log/learned_probs-"+str(run_number)+"-"+\
+				 str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
+				 "-"+str(em_params['gaussian_variance'])+"-"+str(model_params['num_hidden_layers'])+"-"+str(model_params['lipschitz_constant'])+".txt",em_object.learned_priors)
 	li_show=[]
 	for index,m in enumerate(tm.models):
 		mname="log/model-"+str(run_number)+"-"+\
@@ -98,6 +101,7 @@ for iteration in range(em_params['num_iterations']):
 				 "-"+str(em_params['gaussian_variance'])+"-"+str(model_params['num_hidden_layers'])+\
 				 "-"+str(model_params['lipschitz_constant'])+"-"+str(index)+".h5"
 		m.save_weights(mname)
+
 
 
 

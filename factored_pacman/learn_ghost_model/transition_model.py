@@ -37,7 +37,7 @@ class neural_transition_model:
             
     def load_model(self,fname):
         for index,x in enumerate(self.models):
-            temp=fname+"-"+str(index)+".txt"
+            temp=fname+"-"+str(index)+".h5"
             x.load_weights(temp)
 
     def create_model(self):
