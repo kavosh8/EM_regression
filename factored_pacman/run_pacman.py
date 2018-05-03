@@ -19,9 +19,7 @@ def run(pl,num_time_steps,show):
 		if dead:
 			s = Env.reset() 
 			num_dead=num_dead+1
-			#print("deeeeaaad!!")
 		else:
 			s=s1
-	#print(num_dead)
 	return num_dead
 
