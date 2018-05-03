@@ -5,6 +5,8 @@ from keras.layers import Dense, Input
 from keras import optimizers
 from keras.constraints import Constraint
 from keras import backend as K
+import sys
+import os
 
 
 class WeightClip(Constraint):
@@ -30,6 +32,7 @@ class neural_transition_model:
         self.observation_size=model_params['observation_size']
         self.num_models=model_params['num_models']
         self.num_epochs=model_params['num_epochs']
+        self.probs=[]
         for n in range(self.num_models):
             self.models.append(self.create_model())
         if load==True:
@@ -39,6 +42,9 @@ class neural_transition_model:
         for index,x in enumerate(self.models):
             temp=fname+"-"+str(index)+".h5"
             x.load_weights(temp)
+        temp_name=fname.split("model-")[1]
+        script_dir = os.path.dirname(__file__)
+        self.probs=numpy.loadtxt(script_dir+"/log/"+"learned_probs-"+temp_name+".txt")
 
     def create_model(self):
     	input_state = keras.layers.Input(shape=(self.observation_size,))
