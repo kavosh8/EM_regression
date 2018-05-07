@@ -9,27 +9,23 @@ class planner:
 	other_models_object=0
 
 
-	def __init__(self,planner_type):
+	def __init__(self,planner_type,model_params):
 		self.type=planner_type # this determines what kind of model to use
 		#*** 
 		# parameters necessary to load learned EM model for ghosts
-		model_params={}
-		model_params['lipschitz_constant']=0.3
-		model_params['num_hidden_layers']=2
 		model_params['hidden_layer_nodes']=32
 		model_params['activation_fn']='relu'
-		model_params['learning_rate']=0.001
 		model_params['observation_size']=2
 		model_params['num_models']=4
 		model_params['num_epochs']=5
+		model_params['num_hidden_layers']=2
 		model_params['num_samples']=49*5
-		load=True
-		run_ID=3
-		gaussian_variance=0.05
-		fname='learn_ghost_model/log/model-'+str(run_ID)+"-"+str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
-	  	"-"+str(gaussian_variance)+"-"+str(model_params['num_hidden_layers'])+"-"+str(model_params['lipschitz_constant'])
+
+		#load=True
+		fname='learn_ghost_model/log/model-'+str(model_params['run_ID'])+"-"+str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
+	  	"-"+str(model_params['gaussian_variance'])+"-"+str(model_params['num_hidden_layers'])+"-"+str(model_params['lipschitz_constant'])
 	  	# load EM model for ghosts
-		self.em_model_object=learn_ghost_model.transition_model.neural_transition_model(model_params,load,fname)
+		self.em_model_object=learn_ghost_model.transition_model.neural_transition_model(model_params,True,fname)
 		
 
 

@@ -16,9 +16,9 @@ python main.py {} {} {} {} {} {}
 
 for run_number in range(5):
 	for num_samples in [5*49]:
-		for learning_rate in [0.01,0.005,0.001]:
+		for learning_rate in [0.005,0.001]:
 			for gaussian_variance in [0.05,0.1,0.05]:
-				for num_hidden_layers in [1,2]:
+				for num_hidden_layers in [2]:
 					for lipschitz_constant in [0.2,0.25,0.3,0.5,1.0]:
 						fname="log/w_loss-"+str(run_number)+"-"+str(num_samples)+"-"+str(learning_rate)+"-"+str(gaussian_variance)+"-"+str(num_hidden_layers)+"-"+str(lipschitz_constant)+".h5"
 						if os.path.isfile(fname)==False:

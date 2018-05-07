@@ -48,39 +48,6 @@ def load_data(N):
 
 
 
-
 num_epochs=200
-current_states_data,next_states_data,actions_data,rewards_data,dones_data=load_data(5000)
-
-other_models_object.pacman_model.fit([numpy.array(current_states_data)[:,0:2],numpy.array(actions_data)],numpy.array(next_states_data)[:,0:2],epochs=num_epochs)
-other_models_object.reward_model.fit(next_states_data,rewards_data,epochs=num_epochs)
-
-
-state=numpy.array([0,0]).reshape(1,2)
-action=numpy.array([1,0,0,0]).reshape(1,4)
-print(other_models_object.pacman_model.predict([state,action]))
-
-state=numpy.array([0,0]).reshape(1,2)
-action=numpy.array([0,1,0,0]).reshape(1,4)
-print(other_models_object.pacman_model.predict([state,action]))
-
-state=numpy.array([0,0]).reshape(1,2)
-action=numpy.array([0,0,1,0]).reshape(1,4)
-print(other_models_object.pacman_model.predict([state,action]))
-
-state=numpy.array([0,0]).reshape(1,2)
-action=numpy.array([0,0,0,1]).reshape(1,4)
-print(other_models_object.pacman_model.predict([state,action]))
-
-state=numpy.array([0,0,1,1,0,0]).reshape(1,6)
-print(other_models_object.reward_model.predict(state))
-
-
-state=numpy.array([0,0,1,1,2,2]).reshape(1,6)
-print(other_models_object.reward_model.predict(state))
-
-other_models_object.pacman_model.save_weights("pacman.h5")
-other_models_object.reward_model.save_weights("reward.h5")
-#other_models_object.done_model.save_weights("best_models/deterministic_models/"+"done.h5")
-#other_models_object.ghosts_model.save_weights("best_models/deterministic_models/"+"ghosts.h5")
-
+current_states_data,next_states_data,actions_data,rewards_data,dones_data=load_data(5*49*2)
+other_models_object.ghost_model.fit(numpy.array(current_states_data)[:,2:4],numpy.array(next_states_data)[:,2:4],epochs=num_epochs)

@@ -16,15 +16,17 @@ class neural_other_model:
         self.activation_fn=model_params["activation_fn"]
         self.learning_rate=model_params["learning_rate"]
         self.reward_model=self.create_reward_model()
-        self.done_model=self.create_done_model()
+        #self.done_model=self.create_done_model()
         self.pacman_model=self.create_pacman_model()
+        self.ghost_model=self.create_ghost_model()
         if load==True:
             self.load_model(fname)
 
     def load_model(self,fname):
         self.reward_model.load_weights(fname+"reward.h5")
         self.pacman_model.load_weights(fname+"pacman.h5")
-
+        self.ghost_model.load_weights(fname+"ghost.h5")
+    '''
     def create_done_model(self):
             input_state = keras.layers.Input(shape=(self.observation_size,))
             h=input_state
@@ -37,7 +39,7 @@ class neural_other_model:
             ad=optimizers.Adam(lr=self.learning_rate)
             model.compile(loss='binary_crossentropy',optimizer=ad)
             return model
-
+    '''
     def create_reward_model(self):
         input_state = keras.layers.Input(shape=(self.observation_size,))
         h=input_state
@@ -50,6 +52,7 @@ class neural_other_model:
         ad=optimizers.Adam(lr=self.learning_rate)
         model.compile(loss='mean_squared_error',optimizer=ad)
         return model
+
     def create_pacman_model(self):
         pacman_size=2
         input_state = keras.layers.Input(shape=(pacman_size,))
@@ -60,6 +63,19 @@ class neural_other_model:
                     ,activation=self.activation_fn)(h)
         output_pacman=Dense(pacman_size)(h)
         model=keras.models.Model(inputs=[input_state,input_action], outputs=output_pacman)
+        ad=optimizers.Adam(lr=self.learning_rate)
+        model.compile(loss='mean_squared_error',optimizer=ad)
+        return model
+
+    def create_ghost_model(self):
+        ghost_size=2
+        input_state = keras.layers.Input(shape=(2,))
+        h=input_state
+        for l in range(self.num_hidden_layers):
+            h=Dense(self.hidden_layer_nodes
+                    ,activation=self.activation_fn)(h)
+        output_ghost=Dense(2)(h)
+        model=keras.models.Model(inputs=input_state, outputs=output_ghost)
         ad=optimizers.Adam(lr=self.learning_rate)
         model.compile(loss='mean_squared_error',optimizer=ad)
         return model
