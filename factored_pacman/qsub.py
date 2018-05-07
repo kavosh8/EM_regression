@@ -16,7 +16,7 @@ python highlevel_stochastic.py {} {} {} {}
 
 for run_number in range(5):
 		for learning_rate in [0.005,0.001]:
-			for gaussian_variance in [0.05,0.1,0.05]:
+			for gaussian_variance in [0.1,0.05]:
 					for lipschitz_constant in [0.2,0.25,0.3,0.5,1.0]:
 						fname="returns/"+str(lipschitz_constant)+"-"+str(run_number)+"-"+str(learning_rate)+"-"+str(gaussian_variance)+".txt"
 						if os.path.isfile(fname)==False:

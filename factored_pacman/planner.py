@@ -20,12 +20,12 @@ class planner:
 		model_params['num_epochs']=5
 		model_params['num_hidden_layers']=2
 		model_params['num_samples']=49*5
-
-		#load=True
-		fname='learn_ghost_model/log/model-'+str(model_params['run_ID'])+"-"+str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
-	  	"-"+str(model_params['gaussian_variance'])+"-"+str(model_params['num_hidden_layers'])+"-"+str(model_params['lipschitz_constant'])
-	  	# load EM model for ghosts
-		self.em_model_object=learn_ghost_model.transition_model.neural_transition_model(model_params,True,fname)
+		if planner_type=='stochastic':
+			#load=True
+			fname='learn_ghost_model/log/model-'+str(model_params['run_ID'])+"-"+str(model_params['num_samples'])+"-"+str(model_params['learning_rate'])+\
+		  	"-"+str(model_params['gaussian_variance'])+"-"+str(model_params['num_hidden_layers'])+"-"+str(model_params['lipschitz_constant'])
+		  	# load EM model for ghosts
+			self.em_model_object=learn_ghost_model.transition_model.neural_transition_model(model_params,True,fname)
 		
 
 
